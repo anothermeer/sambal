@@ -9,19 +9,23 @@ import (
 	"github.com/spf13/cobra"
 )
 
+func runGUI() {
+	println("Launching GUI...")
+}
+
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "sambal",
 	Short: "Yet another easy to use tool for sharing files and text across devices. ",
-	Long: `A longer description that spans multiple lines and likely contains
-examples and usage of using your application. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Long: `There's a shorter version of the description so why not just look at that instead?
+	tbh this section is just a bunch of random texts.. or is it?
+	Yet another stupidly easy to use tool for sharing files and text across devices and platforms.
+	Powered by golang, cobra, fyne, me and coffee.`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
-	// Run: func(cmd *cobra.Command, args []string) { },
+	Run: func(cmd *cobra.Command, args []string) {
+		runGUI()
+	},
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
