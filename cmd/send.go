@@ -6,6 +6,7 @@ package cmd
 import (
 	"fmt"
 
+	"github.com/anothermeer/sambal/internal/core/network"
 	"github.com/spf13/cobra"
 )
 
@@ -20,8 +21,9 @@ var sendCmd = &cobra.Command{
 			return
 		}
 
-		file := args[0]
-		fmt.Println("Sending:", file)
+		//file := args[0]
+		//fmt.Println("Sending:", file)
+		network.SendMsg("localhost:3721", args[0])
 	},
 }
 
