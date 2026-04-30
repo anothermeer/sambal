@@ -5,7 +5,7 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
-func run() {
+func Run() {
 	a := app.New()
 	w := a.NewWindow("Sambal V0.1")
 
