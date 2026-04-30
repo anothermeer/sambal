@@ -6,6 +6,7 @@ package cmd
 import (
 	"fmt"
 
+	"github.com/anothermeer/sambal/internal/core/network"
 	"github.com/spf13/cobra"
 )
 
@@ -16,6 +17,7 @@ var recvCmd = &cobra.Command{
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("Entered receiving mode...")
+		network.StartTCPSrv("3721")
 	},
 }
 
