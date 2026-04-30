@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/anothermeer/sambal/internal/gui"
 	"github.com/spf13/cobra"
 )
 
@@ -22,6 +23,7 @@ var rootCmd = &cobra.Command{
 	// has an action associated with it:
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("open gui")
+		gui.Run()
 	},
 }
 
