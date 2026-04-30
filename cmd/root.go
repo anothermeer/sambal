@@ -4,14 +4,11 @@ Copyright © 2026 anothermeer <me@melons.cc>
 package cmd
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/spf13/cobra"
 )
-
-func runGUI() {
-	println("Launching GUI...")
-}
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -24,7 +21,7 @@ var rootCmd = &cobra.Command{
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	Run: func(cmd *cobra.Command, args []string) {
-		runGUI()
+		fmt.Println("open gui")
 	},
 }
 
