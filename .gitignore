@@ -1,0 +1,20 @@
+# ENVIRONMENT
+.env
+
+# binaries
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# test bins
+*.test
+*.out
+
+# go workspace
+go.work
+go.work.sum
+
+# VSC things
+.vscode/
