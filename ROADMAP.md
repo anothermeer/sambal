@@ -3,8 +3,8 @@ Sambal V0.1
  - GUI (fyne, temporary)
  - server/receive
  - client/send
- - HELLO handshake
- - JSON message system
+ - HELLO handshake (HELLO, FILE_OFFER, TEXT_SEND, CLIPBOARD_SYNC)
+ - protocol (JSON message system)
 
 Sambal V0.2
  - HTTP file transfer

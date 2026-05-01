@@ -23,7 +23,7 @@ var sendCmd = &cobra.Command{
 
 		//file := args[0]
 		//fmt.Println("Sending:", file)
-		network.SendMsg("localhost:3721", args[0])
+		network.SendHello("localhost:3721")
 	},
 }
 

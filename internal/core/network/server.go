@@ -7,6 +7,8 @@ import (
 	"context"
 	"os/signal"
 	"syscall"
+
+	"github.com/anothermeer/sambal/internal/core/protocol"
 )
 
 func StartTCPSrv(port string) {
@@ -46,9 +48,26 @@ func StartTCPSrv(port string) {
 func handleConnection(conn net.Conn) {
 	defer conn.Close()
 
-	fmt.Println("New Connection from ", conn.RemoteAddr())
+	msg, err := protocol.Receive(conn)
+	if err != nil {
+		fmt.Println("Error:", err)
+		return
+	}
 
-	buffer := make([]byte, 1024)
-	n, _ := conn.Read(buffer)
-	fmt.Println("Received:", string(buffer[:n]))
+	fmt.Println("New Connection from", conn.RemoteAddr(), ", type:", msg.Type)
+
+	// buffer := make([]byte, 1024)
+	// n, _ := conn.Read(buffer)
+	// fmt.Println("Received:", string(buffer[:n]))
+	if msg.Type == "HELLO" {
+		fmt.Println("Handshake from client received.")
+
+		protocol.Send(conn, protocol.Message{
+			Type: "HELLO_ACK",
+			Payload: map[string]any{
+				"accepted": true,
+			},
+		})
+	}
+
 }
