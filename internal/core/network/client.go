@@ -38,6 +38,14 @@ func SendHello(address string) {
 		},
 	})
 
+	protocol.Send(conn, protocol.Message{
+		Type: "FILE_OFFER",
+		Payload: protocol.FileOffer{
+			Name: "test.txt",
+			Size: 2113,
+		},
+	})
+
 	resp, _ := protocol.Receive(conn)
 	fmt.Println("Server responded:", resp.Type)
 }

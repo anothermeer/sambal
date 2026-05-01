@@ -5,3 +5,8 @@ type Message struct {
 	Payload interface{} `json:"payload"`
 } // let's keep interafce{} because why not?
 // also that's compatibility!
+
+type FileOffer struct {
+	Name string `json:"name"`
+	Size int64  `json:"size"`
+}

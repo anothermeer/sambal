@@ -18,7 +18,7 @@ var rootCmd = &cobra.Command{
 	Long: `There's a shorter version of the description so why not just look at that instead?
 	tbh this section is just a bunch of random texts.. or is it?
 	Yet another stupidly easy to use tool for sharing files and text across devices and platforms.
-	Powered by golang, cobra, fyne, me and coffee.`,
+	Powered by golang, cobra, fyne, me, chatgpt and coffee.`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	Run: func(cmd *cobra.Command, args []string) {

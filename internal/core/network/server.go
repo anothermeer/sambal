@@ -1,6 +1,7 @@
 package network
 
 import (
+	"encoding/json"
 	"fmt"
 	"net"
 
@@ -54,19 +55,25 @@ func handleConnection(conn net.Conn) {
 		return
 	}
 
-	fmt.Println("New Connection from", conn.RemoteAddr(), ", type:", msg.Type)
-
-	// buffer := make([]byte, 1024)
-	// n, _ := conn.Read(buffer)
-	// fmt.Println("Received:", string(buffer[:n]))
-	if msg.Type == "HELLO" {
-		fmt.Println("Handshake from client received.")
-
+	switch msg.Type {
+	case "HELLO":
 		protocol.Send(conn, protocol.Message{
 			Type: "HELLO_ACK",
-			Payload: map[string]any{
-				"accepted": true,
-			},
+		})
+
+	case "FILE_OFFER":
+		fmt.Println("Incoming file offer")
+
+		data, _ := json.Marshal(msg.Payload)
+
+		var offer protocol.FileOffer
+		json.Unmarshal(data, &offer)
+
+		fmt.Println("File:", offer.Name, "| Size:", offer.Size)
+
+		// auto accept file offer for now
+		protocol.Send(conn, protocol.Message{
+			Type: "FILE_ACCEPT",
 		})
 	}
 
