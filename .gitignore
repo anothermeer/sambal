@@ -2,6 +2,7 @@
 .env
 
 # binaries
+bin/
 *.exe
 *.exe~
 *.dll
