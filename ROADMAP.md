@@ -1,3 +1,4 @@
+```
 Sambal V0.1
 ├── [/] CLI (cobra)
 ├── [/] GUI (fyne, temporary)
@@ -15,3 +16,4 @@ Sambal V0.2
 └── [ ] mDNS discovery (sambal list)
 
 ...still planning...
+```
