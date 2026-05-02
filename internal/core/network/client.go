@@ -1,8 +1,11 @@
 package network
 
 import (
+	"bytes"
 	"fmt"
 	"net"
+	"net/http"
+	"os"
 
 	"github.com/anothermeer/sambal/internal/core/protocol"
 )
@@ -37,6 +40,8 @@ func SendHello(address string) {
 			},
 		},
 	})
+	resp, _ := protocol.Receive(conn)
+	fmt.Println("Server:", resp.Type)
 
 	protocol.Send(conn, protocol.Message{
 		Type: "FILE_OFFER",
@@ -46,6 +51,24 @@ func SendHello(address string) {
 		},
 	})
 
-	resp, _ := protocol.Receive(conn)
-	fmt.Println("Server responded:", resp.Type)
+	resp, _ = protocol.Receive(conn)
+	fmt.Println("Server:", resp.Type)
+
+	protocol.Send(conn, protocol.Message{
+		Type: "FILE_START",
+		Payload: map[string]any{
+			"url": "http://localhost:3722/upload",
+		},
+	})
+
+	uploadFile("test.txt")
+}
+
+func uploadFile(path string) {
+	file, _ := os.ReadFile(path)
+
+	req, _ := http.NewRequest("POST", "http://localhost:3722/upload", bytes.NewReader(file))
+	req.Header.Set("X-Sambal-Name", path)
+
+	http.DefaultClient.Do(req)
 }

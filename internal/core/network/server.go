@@ -3,9 +3,12 @@ package network
 import (
 	"encoding/json"
 	"fmt"
+	"io"
 	"net"
+	"net/http"
 
 	"context"
+	"os"
 	"os/signal"
 	"syscall"
 
@@ -18,6 +21,9 @@ func StartTCPSrv(port string) {
 		panic(err)
 	}
 	defer ln.Close()
+
+	// http server for transfering files
+	go startHTTPServer()
 
 	fmt.Println("Sambal listening on port", port)
 
@@ -46,35 +52,61 @@ func StartTCPSrv(port string) {
 	}
 }
 
+func startHTTPServer() {
+	http.HandleFunc("/upload", func(w http.ResponseWriter, r *http.Request) {
+		name := r.Header.Get("X-Sambal-Name")
+
+		file, _ := os.Create(name)
+		defer file.Close()
+
+		io.Copy(file, r.Body)
+
+		fmt.Println("Received file:", name)
+	})
+
+	fmt.Println("HTTP Server listening on port 3722")
+	http.ListenAndServe(":3722", nil)
+}
+
 func handleConnection(conn net.Conn) {
 	defer conn.Close()
 
-	msg, err := protocol.Receive(conn)
-	if err != nil {
-		fmt.Println("Error:", err)
-		return
+	for {
+		msg, err := protocol.Receive(conn)
+		if err != nil {
+			if err == io.EOF {
+				fmt.Println("Client Disconnected")
+			} else {
+				fmt.Println("Error:", err)
+			}
+			return
+		}
+
+		switch msg.Type {
+
+		case "HELLO":
+			protocol.Send(conn, protocol.Message{
+				Type: "HELLO_ACK",
+			})
+
+		case "FILE_OFFER":
+			fmt.Println("Incoming file offer")
+
+			data, _ := json.Marshal(msg.Payload)
+
+			var offer protocol.FileOffer
+			json.Unmarshal(data, &offer)
+
+			fmt.Println("File:", offer.Name, "| Size:", offer.Size)
+
+			// auto accept file offer for now
+			protocol.Send(conn, protocol.Message{
+				Type: "FILE_ACCEPT",
+			})
+
+		case "FILE_START":
+			fmt.Println("Client starting upload...")
+
+		}
 	}
-
-	switch msg.Type {
-	case "HELLO":
-		protocol.Send(conn, protocol.Message{
-			Type: "HELLO_ACK",
-		})
-
-	case "FILE_OFFER":
-		fmt.Println("Incoming file offer")
-
-		data, _ := json.Marshal(msg.Payload)
-
-		var offer protocol.FileOffer
-		json.Unmarshal(data, &offer)
-
-		fmt.Println("File:", offer.Name, "| Size:", offer.Size)
-
-		// auto accept file offer for now
-		protocol.Send(conn, protocol.Message{
-			Type: "FILE_ACCEPT",
-		})
-	}
-
 }
