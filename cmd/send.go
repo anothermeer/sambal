@@ -6,7 +6,7 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/anothermeer/sambal/internal/core/network"
+	"github.com/anothermeer/sambal/internal/core/actions"
 	"github.com/spf13/cobra"
 )
 
@@ -14,7 +14,6 @@ import (
 var sendCmd = &cobra.Command{
 	Use:   "send",
 	Short: "Send files",
-	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) == 0 {
 			fmt.Println("ERR: No file specified.")
@@ -23,7 +22,7 @@ var sendCmd = &cobra.Command{
 
 		//file := args[0]
 		//fmt.Println("Sending:", file)
-		network.SendHello("localhost:3721")
+		actions.SendFile("localhost:3721", args[0])
 	},
 }
 

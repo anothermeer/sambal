@@ -10,3 +10,11 @@ type FileOffer struct {
 	Name string `json:"name"`
 	Size int64  `json:"size"`
 }
+
+type TextTrans struct {
+	Text string `json:"text"`
+}
+
+type CBTrans struct {
+	Text string `json:"text"`
+}

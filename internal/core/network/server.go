@@ -107,6 +107,22 @@ func handleConnection(conn net.Conn) {
 		case "FILE_START":
 			fmt.Println("Client starting upload...")
 
+		case "TEXT_SEND":
+			data, _ := json.Marshal(msg.Payload)
+
+			var text protocol.TextTrans
+			json.Unmarshal(data, &text)
+
+			fmt.Println("Text received:", text.Text)
+
+		case "CLIPBOARD_SYNC":
+			// https://github.com/tiagomelo/go-clipboard
+			data, _ := json.Marshal(msg.Payload)
+
+			var clip protocol.CBTrans
+			json.Unmarshal(data, &clip)
+
+			fmt.Println("Clipboard received:", clip.Text)
 		}
 	}
 }

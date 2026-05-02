@@ -22,3 +22,5 @@ go.work.sum
 
 # images (temporary)
 imgs/
+
+internal_notes.txt
