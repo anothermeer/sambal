@@ -119,7 +119,7 @@ jobs:
           path: sambal-macos-${{ matrix.goarch }}.zip
           
   upload:
-    needs: [build-linux-windows, build-macos]
+    needs: [build-windows, build-linux, build-macos-arm, build-macos-amd]
     runs-on: ubuntu-latest
 
     steps:
