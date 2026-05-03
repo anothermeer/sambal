@@ -5,6 +5,7 @@ echo Starting build process...
 echo [!] First time compile will be slow as fyne-cross is setting up.
 
 set GOTOOLCHAIN=auto
+set FYNE_CROSS_GO_VERSION=1.26.2
 
 docker info >nul 2>&1
 if errorlevel 1 (
