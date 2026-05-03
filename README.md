@@ -18,7 +18,7 @@ cd sambal
 go build . -o sambal.exe
 ```
 Linux/Unix:
-```shell
+```bash
 git clone https://github.com/anothermeer/sambal
 cd sambal
 go build . -o sambal.exe
