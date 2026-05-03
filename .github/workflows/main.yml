@@ -1,9 +1,12 @@
-name: Release binaries
+name: Build and release binaries
 
 on:
   release:
     types:
       - published
+
+permissions:
+  contents: write
 
 jobs:
   build-windows:
