@@ -22,31 +22,32 @@ Sambal V0.2
 ├── [ ] better --help
 ├── [ ] better "sambal version"
 ├── [ ] changable IP/port
-├── [ ] auto device name
+├── [ ] auto device name/id
 └── [ ] double click -> GUI
 
 Sambal V0.3
 ├── [ ] Clipboard sync
 ├── [ ] large file transfer/streaming
 ├── [ ] multi-file support
-├── [ ] mDNS discovery (sambal list)
+└── [ ] mDNS discovery (sambal list)
 
 planned commands:
 sambal version
 sambal send <file>
 sambal recv
 sambal text <text>
-sambal clip
 sambal ping
+sambal clip
+sambal list
 
 planned flags:
 --version
 --help
 --debug
 --console
---port <port>
---tcpip <ip addr>
---httpip <ip addr>
+--tcpport <port>
+--httpport <port>
+--ip <ip addr>
 
 ...still planning...
 ```
