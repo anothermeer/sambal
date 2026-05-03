@@ -35,9 +35,20 @@ jobs:
         with:
           go-version: '1.26'
 
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            gcc \
+            libgl1-mesa-dev \
+            xorg-dev \
+            libxkbcommon-dev \
+            libwayland-dev \
+            libegl1-mesa-dev
+
       - name: Build
         run: |
-          GOOS=linux GOARCH=amd64 go build -o sambal-linux-amd64
+          GOOS=linux GOARCH=amd64 CGO_ENABLED=1 go build -o sambal-linux-amd64
 
       - uses: actions/upload-artifact@v4
         with:

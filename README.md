@@ -5,21 +5,21 @@ Fun Fact: the name `Sambal` is actually inspired from the file transfer tool, sa
 
 ## Building Requirements
 - Go = 1.26.2
-- Cobra > 1.10.2
-- Fyne > 2.7.3
-- fyne-cross > 1.6.1
-- docker
-- active internet connection
+- Cobra >= 1.10.2
+- Fyne >= 2.7.3
+- internet connection
 - you
 
-## Installation
+## Installation (I actually don't know how)
 Windows:
 ```powershell
 git clone https://github.com/anothermeer/sambal
-./build_all.bat
+cd sambal
+go build . -o sambal.exe
 ```
 Linux/Unix:
 ```shell
 git clone https://github.com/anothermeer/sambal
-./build_all.sh
+cd sambal
+go build . -o sambal.exe
 ```

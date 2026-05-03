@@ -22,8 +22,9 @@ go.work.sum
 .vscode/
 
 # images (temporary)
-imgs/
-*.png
+#imgs/
+#*.png
+# not anymore!
 
 internal_notes.txt
 *.bat
