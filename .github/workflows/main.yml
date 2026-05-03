@@ -14,46 +14,65 @@ jobs:
 
       - uses: actions/setup-go@v5
         with:
-          go-version: '1.22'
+          go-version: '1.26'
 
       - name: Build
         run: |
-          GOOS=windows GOARCH=amd64 go build -o sambal-windows-amd64.exe
+          go build -o sambal-windows-amd64.exe
 
       - uses: actions/upload-artifact@v4
         with:
           name: sambal-windows-amd64.exe
           path: sambal-windows-amd64.exe
 
-  build-linux:
+  build-linux-amd:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        include:
-          - goos: linux
-            goarch: amd64
-            output: sambal-linux-amd64
-
-          - goos: linux
-            goarch: arm64
-            output: sambal-linux-arm64
 
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-go@v5
         with:
-          go-version: '1.22'
+          go-version: '1.26'
 
       - name: Build
         run: |
-          GOOS=${{ matrix.goos }} GOARCH=${{ matrix.goarch }} go build -o ${{ matrix.output }}
+          GOOS=linux GOARCH=amd64 go build -o sambal-linux-amd64
 
       - uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.output }}
-          path: ${{ matrix.output }}
+          name: sambal-linux-amd64
+          path: sambal-linux-amd64
+
+  build-linux-arm:
+    runs-on: ubuntu-24.04-arm
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.26'
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            gcc \
+            libgl1-mesa-dev \
+            xorg-dev \
+            libxkbcommon-dev \
+            libwayland-dev \
+            libegl1-mesa-dev
+
+      - name: Build
+        run: |
+          GOOS=linux GOARCH=arm64 CGO_ENABLED=1 go build -o sambal-linux-arm64
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sambal-linux-arm64
+          path: sambal-linux-arm64
 
   build-macos-arm:
     runs-on: macos-latest
@@ -63,13 +82,17 @@ jobs:
 
       - uses: actions/setup-go@v5
         with:
-          go-version: '1.22'
+          go-version: '1.26'
 
       - name: Install Fyne
         run: go install fyne.io/tools/cmd/fyne@latest
 
+      - name: Add Go bin to PATH
+        run: echo "$HOME/go/bin" >> $GITHUB_PATH
+
       - name: Package macOS app
-        run: fyne package -os darwin -arch arm64
+        #run: fyne package -os darwin -arch arm64
+        run: GOOS=darwin GOARCH=arm64 fyne package
 
       - name: Rename output app
         run: |
@@ -89,13 +112,17 @@ jobs:
 
       - uses: actions/setup-go@v5
         with:
-          go-version: '1.22'
+          go-version: '1.26'
 
       - name: Install Fyne
         run: go install fyne.io/tools/cmd/fyne@latest
 
+      - name: Add Go bin to PATH
+        run: echo "$HOME/go/bin" >> $GITHUB_PATH
+
       - name: Package macOS app
-        run: fyne package -os darwin -arch amd64
+        #run: fyne package -os darwin -arch amd64
+        run: GOOS=darwin GOARCH=amd64 fyne package
 
       - name: Rename output app
         run: |
@@ -108,7 +135,7 @@ jobs:
           path: sambal-macos-amd64.zip
           
   upload:
-    needs: [build-windows, build-linux, build-macos-arm, build-macos-amd]
+    needs: [build-windows, build-linux-amd, build-linux-arm, build-macos-amd, build-macos-arm]
     runs-on: ubuntu-latest
 
     steps:
