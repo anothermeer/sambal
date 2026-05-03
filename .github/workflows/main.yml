@@ -1,0 +1,86 @@
+name: Release binaries
+
+on:
+  release:
+    types:
+      - published
+
+jobs:
+  build-linux-windows:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        include:
+          - goos: linux
+            goarch: amd64
+            output: sambal-linux-amd64
+
+          - goos: linux
+            goarch: arm64
+            output: sambal-linux-arm64
+
+          - goos: windows
+            goarch: amd64
+            output: sambal-windows-amd64.exe
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+
+      - name: Build
+        run: |
+          GOOS=${{ matrix.goos }} GOARCH=${{ matrix.goarch }} go build -o ${{ matrix.output }}
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.output }}
+          path: ${{ matrix.output }}
+
+  build-macos:
+    runs-on: macos-latest
+
+    strategy:
+      matrix:
+        goarch: [amd64, arm64]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+
+      - name: Install Fyne
+        run: go install fyne.io/fyne/v2/cmd/fyne@latest
+
+      - name: Package macOS app
+        run: fyne package -os darwin -arch ${{ matrix.goarch }}
+
+      - name: Rename output app
+        run: |
+          mv *.app sambal-macos-${{ matrix.goarch }}.app
+          zip -r sambal-macos-${{ matrix.goarch }}.zip sambal-macos-${{ matrix.goarch }}.app 
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: macos-${{ matrix.goarch }}
+          path: sambal-macos-${{ matrix.goarch }}.zip
+          
+  upload:
+    needs: [build-linux-windows, build-macos]
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/download-artifact@v4
+
+      - name: Upload to Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            **/*.zip
+            **/sambal-linux-*
+            **/sambal-windows-*.exe
