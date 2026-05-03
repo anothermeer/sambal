@@ -46,11 +46,12 @@ fyne-cross linux -arch=amd64 -output sambal-linux-amd64 -app-id com.anothermeer.
 echo "Building for Windows (64-bit)..."
 fyne-cross windows -arch=amd64 -output sambal-windows-amd64 -app-id com.anothermeer.sambal
 
-echo "Building for macOS (Intel)..."
-fyne-cross darwin -arch=amd64 -output sambal-macos-amd64 -app-id com.anothermeer.sambal
+# I'm not going to build MacOS builds for now... such headache
+#echo "Building for macOS (Intel)..."
+#fyne-cross darwin -arch=amd64 -output sambal-macos-amd64 -app-id com.anothermeer.sambal
 
-echo "Building for macOS (Apple Silicon)..."
-fyne-cross darwin -arch=arm64 -output sambal-macos-arm64 -app-id com.anothermeer.sambal
+#echo "Building for macOS (Apple Silicon)..."
+#fyne-cross darwin -arch=arm64 -output sambal-macos-arm64 -app-id com.anothermeer.sambal
 
 echo "Building for Linux (ARM)..."
 fyne-cross linux -arch=arm -output sambal-linux-arm64 -app-id com.anothermeer.sambal
@@ -58,5 +59,5 @@ fyne-cross linux -arch=arm -output sambal-linux-arm64 -app-id com.anothermeer.sa
 echo "Copying outputs to bin/..."
 cp -r fyne-cross/dist/* bin/
 
-echo "All done! You should be seeing 5 binaries in the bin folder"
+echo "All done! You should be seeing 3 binaries in the bin folder"
 read -p "Press enter to exit"
