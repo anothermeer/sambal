@@ -9,7 +9,7 @@ Sambal V0.1
 │   ├── [/] FILE_OFFER
 │   ├── [/] TEXT_SEND (template)
 │   └── [/] CLIPBOARD_SYNC (template)
-├── [ ] tidy commands and functions
+├── [/] tidy commands and functions
 └── [/] JSON message system
 
 Sambal V0.2
@@ -18,12 +18,18 @@ Sambal V0.2
 │   ├── [ ] file size validation
 │   ├── [ ] overwrite check
 │   └── [ ] checksum verifications
-├── [ ] large file transfer/streaming
-├── [ ] multi-file support
-└── [ ] mDNS discovery (sambal list)
+├── [ ] daemon/tray (sambal recv)
+├── [ ] better --help
+├── [ ] better "sambal version"
+├── [ ] changable IP/port
+├── [ ] auto device name
+└── [ ] double click -> GUI
 
 Sambal V0.3
-└── [ ] HTTPS file transfer?
+├── [ ] Clipboard sync
+├── [ ] large file transfer/streaming
+├── [ ] multi-file support
+├── [ ] mDNS discovery (sambal list)
 
 planned commands:
 sambal version

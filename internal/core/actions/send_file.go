@@ -3,6 +3,8 @@ package actions
 import (
 	"fmt"
 	"net"
+	"os"
+	"path/filepath"
 
 	"github.com/anothermeer/sambal/internal/core/network"
 	"github.com/anothermeer/sambal/internal/core/protocol"
@@ -10,12 +12,20 @@ import (
 )
 
 func SendFile(address string, path string) {
+	_, err := os.ReadFile(path)
+	if err != nil {
+		fmt.Println("File not found:", path)
+		return
+	}
+
 	conn, err := net.Dial("tcp", address)
 	if err != nil {
 		fmt.Println("Connection Failed:", err)
 		return
 	}
 	defer conn.Close()
+
+	info, _ := os.Stat(path)
 
 	protocol.Send(conn, protocol.Message{
 		Type: "HELLO",
@@ -33,8 +43,8 @@ func SendFile(address string, path string) {
 	protocol.Send(conn, protocol.Message{
 		Type: "FILE_OFFER",
 		Payload: protocol.FileOffer{
-			Name: path,
-			Size: 0, // TODO: later fix this ah
+			Name: filepath.Base(path),
+			Size: info.Size(),
 		},
 	})
 
@@ -48,5 +58,5 @@ func SendFile(address string, path string) {
 		},
 	})
 
-	network.UploadFile("test.txt")
+	network.UploadFile(path)
 }
