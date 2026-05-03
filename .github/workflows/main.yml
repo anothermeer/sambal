@@ -6,7 +6,29 @@ on:
       - published
 
 jobs:
-  build-linux-windows:
+  build-windows:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+
+      - name: Build
+        run: |
+          GOOS=${{ matrix.goos }} GOARCH=amd64 go build -o sambal-windows-arm64.exe
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sambal-windows-arm64.exe
+          path: sambal-windows-arm64.exe
+
+
+
+
+  build-linux:
     runs-on: ubuntu-latest
 
     strategy:
@@ -19,10 +41,6 @@ jobs:
           - goos: linux
             goarch: arm64
             output: sambal-linux-arm64
-
-          - goos: windows
-            goarch: amd64
-            output: sambal-windows-amd64.exe
 
     steps:
       - uses: actions/checkout@v4
@@ -40,12 +58,12 @@ jobs:
           name: ${{ matrix.output }}
           path: ${{ matrix.output }}
 
-  build-macos:
+  build-macos-arm:
     runs-on: macos-latest
 
     strategy:
       matrix:
-        goarch: [amd64, arm64]
+        goarch: [arm64]
 
     steps:
       - uses: actions/checkout@v4
@@ -55,7 +73,37 @@ jobs:
           go-version: '1.22'
 
       - name: Install Fyne
-        run: go install fyne.io/fyne/v2/cmd/fyne@latest
+        run: go install fyne.io/tools/cmd/fyne@latest
+
+      - name: Package macOS app
+        run: fyne package -os darwin -arch ${{ matrix.goarch }}
+
+      - name: Rename output app
+        run: |
+          mv *.app sambal-macos-${{ matrix.goarch }}.app
+          zip -r sambal-macos-${{ matrix.goarch }}.zip sambal-macos-${{ matrix.goarch }}.app 
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: macos-${{ matrix.goarch }}
+          path: sambal-macos-${{ matrix.goarch }}.zip
+
+  build-macos-amd:
+    runs-on: macos-26-intel
+
+    strategy:
+      matrix:
+        goarch: [arm64]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+
+      - name: Install Fyne
+        run: go install fyne.io/tools/cmd/fyne@latest
 
       - name: Package macOS app
         run: fyne package -os darwin -arch ${{ matrix.goarch }}
