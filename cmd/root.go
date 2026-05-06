@@ -8,7 +8,6 @@ import (
 	"os"
 
 	"github.com/anothermeer/sambal/internal/core/version"
-	"github.com/anothermeer/sambal/internal/gui"
 	"github.com/spf13/cobra"
 )
 
@@ -29,8 +28,7 @@ var rootCmd = &cobra.Command{
 			fmt.Println("Sambal", version.Version)
 			return
 		}
-		fmt.Println("open gui")
-		gui.Run()
+		cmd.Help()
 	},
 }
 

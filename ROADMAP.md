@@ -23,13 +23,20 @@ Sambal V0.2
 ├── [ ] better "sambal version"
 ├── [ ] changable IP/port
 ├── [ ] auto device name/id
-└── [ ] double click -> GUI
+└── [ ] double click -> temporary GUI
 
 Sambal V0.3
+├── [ ] usable GUI
 ├── [ ] Clipboard sync
 ├── [ ] large file transfer/streaming
 ├── [ ] multi-file support
 └── [ ] mDNS discovery (sambal list)
+
+Future plans
+├── [ ] Android support
+├── [ ] iOS support
+├── [ ] Windows & MacOS signing
+└── [ ] better GUI
 
 planned commands:
 sambal version
@@ -49,5 +56,6 @@ planned flags:
 --httpport <port>
 --ip <ip addr>
 
+(maybe open a Github Sponsors??)
 ...still planning...
 ```
