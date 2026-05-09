@@ -1,12 +1,11 @@
 package utils
 
-import "os"
+import (
+	"os"
+
+	"github.com/mattn/go-isatty"
+)
 
 func IsRunningInTerminal() bool {
-	fi, err := os.Stdout.Stat()
-	if err != nil {
-		return false
-	}
-
-	return (fi.Mode() & os.ModeCharDevice) != 0
+	return isatty.IsTerminal(os.Stdout.Fd()) || isatty.IsCygwinTerminal(os.Stdout.Fd())
 }

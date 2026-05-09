@@ -26,7 +26,7 @@ Sambal V0.2
 └── [ ] double click -> temporary GUI
 
 Sambal V0.3
-├── [ ] usable GUI
+├── [ ] main window + settings
 ├── [ ] Clipboard sync
 ├── [ ] large file transfer/streaming
 ├── [ ] multi-file support

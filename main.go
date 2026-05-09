@@ -20,12 +20,12 @@ func main() {
 		}
 	}
 
-	// double click detection
-	if len(os.Args) == 1 && !utils.IsRunningInTerminal() {
-		gui.Run()
+	// terminal? go CLI
+	if utils.IsRunningInTerminal() {
+		cmd.Execute()
 		return
 	}
 
-	//finally CLI
-	cmd.Execute()
+	//finally always GUI
+	gui.Run()
 }
