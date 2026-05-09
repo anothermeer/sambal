@@ -28,3 +28,6 @@ go.work.sum
 
 internal_notes.txt
 *.bat
+
+# why not
+weights.bin

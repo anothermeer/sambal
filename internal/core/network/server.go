@@ -15,6 +15,8 @@ import (
 	"github.com/anothermeer/sambal/internal/core/protocol"
 )
 
+var expectedFileSize int64
+
 func StartTCPSrv(port string) {
 	ln, err := net.Listen("tcp", ":"+port)
 	if err != nil {
@@ -27,6 +29,7 @@ func StartTCPSrv(port string) {
 
 	fmt.Println("Sambal listening on port", port)
 
+	// ctrl + c
 	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
 	defer stop()
 
@@ -56,12 +59,32 @@ func startHTTPServer() {
 	http.HandleFunc("/upload", func(w http.ResponseWriter, r *http.Request) {
 		name := r.Header.Get("X-Sambal-Name")
 
+		if _, err := os.Stat(name); err == nil {
+			fmt.Println("File already exists:", name)
+
+			http.Error(w, "file already exists", http.StatusConflict)
+			return
+		}
+
 		file, _ := os.Create(name)
 		defer file.Close()
 
-		io.Copy(file, r.Body)
+		written, err := io.Copy(file, r.Body)
+		if err != nil {
+			fmt.Println("Upload Error:", err)
+			return
+		}
 
 		fmt.Println("Received file:", name)
+		fmt.Println("Bytes received:", written)
+
+		if written != expectedFileSize {
+			fmt.Println("WARNING: File size mismatch!")
+			fmt.Println("Expected:", expectedFileSize)
+			fmt.Println("Received:", written)
+		} else {
+			fmt.Println("File validation passed.")
+		}
 	})
 
 	fmt.Println("HTTP Server listening on port 3722")
@@ -98,10 +121,15 @@ func handleConnection(conn net.Conn) {
 			json.Unmarshal(data, &offer)
 
 			fmt.Println("File:", offer.Name, "| Size:", offer.Size)
+			expectedFileSize = offer.Size
 
+			ip := GetLocalIP(conn)
 			// auto accept file offer for now
 			protocol.Send(conn, protocol.Message{
 				Type: "FILE_ACCEPT",
+				Payload: map[string]any{
+					"http_url": "http://" + ip + ":3722/upload",
+				},
 			})
 
 		case "FILE_START":

@@ -19,7 +19,20 @@ go build . -o sambal.exe
 ```
 Linux/Unix:
 ```bash
+sudo apt update
+sudo apt install gcc libgl1-mesa-dev xorg-dev libwayland-dev libxkbcommon-dev
 git clone https://github.com/anothermeer/sambal
 cd sambal
-go build . -o sambal.exe
+go build . -o sambal
+```
+
+## Troubleshooting
+
+### Linux build error:
+`build constraints exclude all Go files`
+
+Install OpenGL/X11 development libraries:
+
+```bash
+sudo apt install gcc libgl1-mesa-dev xorg-dev
 ```

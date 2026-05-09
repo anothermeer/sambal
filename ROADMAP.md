@@ -14,16 +14,16 @@ Sambal V0.1
 
 Sambal V0.2
 ├── [ ] real HTTP file transfer
-│   ├── [ ] progress bar
-│   ├── [ ] file size validation
-│   ├── [ ] overwrite check
+│   ├── [/] progress bar
+│   ├── [/] file size validation
+│   ├── [/] overwrite check
 │   └── [ ] checksum verifications
 ├── [ ] daemon/tray (sambal recv)
-├── [ ] better --help
+├── [/] better --help
 ├── [ ] better "sambal version"
 ├── [ ] changable IP/port
 ├── [ ] auto device name/id
-└── [ ] double click -> temporary GUI
+└── [/] double click -> temporary GUI
 
 Sambal V0.3
 ├── [ ] main window + settings
@@ -55,6 +55,7 @@ planned flags:
 --tcpport <port>
 --httpport <port>
 --ip <ip addr>
+--fileloc <path>
 
 (maybe open a Github Sponsors??)
 ...still planning...
