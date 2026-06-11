@@ -36,7 +36,8 @@ Future plans
 ├── [ ] Android support
 ├── [ ] iOS support
 ├── [ ] Windows & MacOS signing
-└── [ ] better GUI
+├── [ ] More Linux distro compatibility
+└── [ ] Better GUI
 
 planned commands:
 sambal version
