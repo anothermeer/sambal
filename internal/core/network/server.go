@@ -16,6 +16,7 @@ import (
 )
 
 var expectedFileSize int64
+var expectedSHA256 string
 
 func StartTCPSrv(port string) {
 	ln, err := net.Listen("tcp", ":"+port)
@@ -78,6 +79,21 @@ func startHTTPServer() {
 		fmt.Println("Received file:", name)
 		fmt.Println("Bytes received:", written)
 
+		hash, err := SHA256(name)
+		if err != nil {
+			fmt.Println("Hash verification failed:", err)
+			return
+		}
+		fmt.Println("Expected SHA256:", expectedSHA256)
+		fmt.Println("Received SHA256:", hash)
+
+		if hash != expectedSHA256 {
+			fmt.Println("WARNING: HASH MISMATCH!")
+			return
+		}
+
+		fmt.Println("Checksum verification passed.")
+
 		if written != expectedFileSize {
 			fmt.Println("WARNING: File size mismatch!")
 			fmt.Println("Expected:", expectedFileSize)
@@ -119,6 +135,8 @@ func handleConnection(conn net.Conn) {
 
 			var offer protocol.FileOffer
 			json.Unmarshal(data, &offer)
+
+			expectedSHA256 = offer.SHA256
 
 			fmt.Println("File:", offer.Name, "| Size:", offer.Size)
 			expectedFileSize = offer.Size

@@ -57,12 +57,23 @@ func SendFile(address string, path string) {
 		return
 	}
 
+	// GONNA CALCULAT DA FILE HASH
+	println("Calculating file hash...")
+	checksum, err := network.SHA256(path)
+	if err != nil {
+		fmt.Println("Hash failed:", err)
+		return
+	}
+
+	fmt.Println("SHA256:", checksum)
+
 	// I HAVE A FILE FOR YA, OK OR NO?
 	protocol.Send(conn, protocol.Message{
 		Type: "FILE_OFFER",
 		Payload: protocol.FileOffer{
-			Name: filepath.Base(path),
-			Size: info.Size(),
+			Name:   filepath.Base(path),
+			Size:   info.Size(),
+			SHA256: checksum,
 		},
 	})
 

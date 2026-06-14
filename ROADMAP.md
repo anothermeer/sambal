@@ -13,11 +13,11 @@ Sambal V0.1
 └── [/] JSON message system
 
 Sambal V0.2
-├── [ ] real HTTP file transfer
+├── [/] real HTTP file transfer
 │   ├── [/] progress bar
 │   ├── [/] file size validation
-│   ├── [ ] overwrite check
-│   └── [ ] checksum verifications
+│   ├── [/] overwrite check
+│   └── [/] checksum verifications
 ├── [ ] daemon/tray (sambal recv)
 ├── [ ] better connection handling
 │   ├── [ ] pause transfer

@@ -7,8 +7,9 @@ type Message struct {
 // also that's compatibility!
 
 type FileOffer struct {
-	Name string `json:"name"`
-	Size int64  `json:"size"`
+	Name   string `json:"name"`
+	Size   int64  `json:"size"`
+	SHA256 string `json:"sha256"`
 }
 
 type TextTrans struct {
