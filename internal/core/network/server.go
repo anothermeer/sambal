@@ -123,7 +123,8 @@ func handleConnection(conn net.Conn) {
 			fmt.Println("File:", offer.Name, "| Size:", offer.Size)
 			expectedFileSize = offer.Size
 
-			ip := GetLocalIP(conn)
+			ip := GetLocalIP()
+			fmt.Println("Upload files on", ip)
 			// auto accept file offer for now
 			protocol.Send(conn, protocol.Message{
 				Type: "FILE_ACCEPT",

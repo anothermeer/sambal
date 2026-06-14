@@ -16,20 +16,38 @@ Sambal V0.2
 ├── [ ] real HTTP file transfer
 │   ├── [/] progress bar
 │   ├── [/] file size validation
-│   ├── [/] overwrite check
+│   ├── [ ] overwrite check
 │   └── [ ] checksum verifications
 ├── [ ] daemon/tray (sambal recv)
+├── [ ] better connection handling
+│   ├── [ ] pause transfer
+│   ├── [ ] resume transfer
+│   └── [ ] timeouts
+├── [ ] protocol version compatibility
+│   ├── [ ] minimum supported version
+│   └── [ ] incompatible version warning
 ├── [/] better --help
 ├── [ ] better "sambal version"
-├── [ ] changable IP/port
+├── [ ] auto update
 ├── [ ] auto device name/id
 └── [/] double click -> temporary GUI
 
 Sambal V0.3
 ├── [ ] main window + settings
 ├── [ ] Clipboard sync
+├── [ ] transfer logs
 ├── [ ] large file transfer/streaming
 ├── [ ] multi-file support
+│   └── [ ] transfer IDs
+├── [ ] settings flags
+│   ├── [ ] configurable port
+│   │   ├── [ ] port conflict warning
+│   │   └── [ ] port in use warning
+│   ├── [ ] daemon configs
+│   │   ├── [ ] configurable timeout
+│   │   ├── [ ] auto accept on/off
+│   │   └── [ ] discover/transfer on/off
+│   └── [ ] targetted device
 └── [ ] mDNS discovery (sambal list)
 
 Future plans
