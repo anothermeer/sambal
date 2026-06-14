@@ -25,7 +25,7 @@ var rootCmd = &cobra.Command{
 	// has an action associated with it:
 	Run: func(cmd *cobra.Command, args []string) {
 		if showVersion {
-			fmt.Println("Sambal", version.Version)
+			fmt.Println("Sambal", version.AppVersion)
 			return
 		}
 		cmd.Help()

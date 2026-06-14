@@ -12,43 +12,43 @@ Sambal V0.1
 ├── [/] tidy commands and functions
 └── [/] JSON message system
 
-Sambal V0.2
+Sambal V0.1.1
 ├── [/] real HTTP file transfer
 │   ├── [/] progress bar
 │   ├── [/] file size validation
 │   ├── [/] overwrite check
 │   └── [/] checksum verifications
+├── [ ] protocol version compatibility
+│   ├── [/] minimum supported version
+│   └── [ ] incompatible version warning
+├── [/] better --help
+├── [ ] auto device name/id
+├── [/] large file transfer/streaming
+├── [ ] mDNS discovery (sambal list)
+└── [/] double click -> temporary GUI
+
+Planned features
+├── [ ] main window + settings
+├── [ ] Clipboard sync
+├── [ ] transfer logs
 ├── [ ] daemon/tray (sambal recv)
+├── [ ] better "sambal version"
+├── [ ] auto update
 ├── [ ] better connection handling
 │   ├── [ ] pause transfer
 │   ├── [ ] resume transfer
 │   └── [ ] timeouts
-├── [ ] protocol version compatibility
-│   ├── [ ] minimum supported version
-│   └── [ ] incompatible version warning
-├── [/] better --help
-├── [ ] better "sambal version"
-├── [ ] auto update
-├── [ ] auto device name/id
-└── [/] double click -> temporary GUI
-
-Sambal V0.3
-├── [ ] main window + settings
-├── [ ] Clipboard sync
-├── [ ] transfer logs
-├── [ ] large file transfer/streaming
 ├── [ ] multi-file support
 │   └── [ ] transfer IDs
-├── [ ] settings flags
-│   ├── [ ] configurable port
-│   │   ├── [ ] port conflict warning
-│   │   └── [ ] port in use warning
-│   ├── [ ] daemon configs
-│   │   ├── [ ] configurable timeout
-│   │   ├── [ ] auto accept on/off
-│   │   └── [ ] discover/transfer on/off
-│   └── [ ] targetted device
-└── [ ] mDNS discovery (sambal list)
+└── [ ] settings flags
+    ├── [ ] configurable port
+    │   ├── [ ] port conflict warning
+    │   └── [ ] port in use warning
+    ├── [ ] daemon configs
+    │   ├── [ ] configurable timeout
+    │   ├── [ ] auto accept on/off
+    │   └── [ ] discover/transfer on/off
+    └── [ ] targetted device
 
 Future plans
 ├── [ ] Android support

@@ -13,8 +13,9 @@ import (
 )
 
 func SendFile(address string, path string) {
+	///////////////////////////////////////////   CHECKS   ///////////////////////////////////////////
 	// detect if file exist
-	_, err := os.Stat(path)
+	info , err := os.Stat(path)
 	if err != nil {
 		fmt.Println("File not found:", path)
 		return
@@ -28,34 +29,47 @@ func SendFile(address string, path string) {
 	}
 	defer conn.Close()
 
-	info, _ := os.Stat(path)
+	///////////////////////////////////////////   HELLO   ///////////////////////////////////////////
 
-	// HELLO
+	// HELLO SERVER
 	protocol.Send(conn, protocol.Message{
 		Type: "HELLO",
 		Payload: map[string]any{
-			"version": version.Version,
+			"version":  version.AppVersion,
+			"protocol": version.ProtocolVersion,
 			"device": map[string]any{
-				"id":   "test1",
-				"name": "test-device1",
+				"id":   ,
+				"name": ,
 			},
 		},
-	}) // not HELLO
+	})
+
+	// I HELLO YOU, PLS RESPOND HELLO PLSSSSSSSS
 	resp, err := protocol.Receive(conn)
+	if err != nil {
+		fmt.Println("Failed to receive HELLO_ACK:", err)
+		return
+	}
+
+	helloPayload, ok := resp.Payload.(map[string]any)
 	if err != nil {
 		fmt.Println("Failed to receive HELLO_ACK:", err)
 		return
 	}
 	fmt.Println("Server:", resp.Type)
 
-	//fmt.Printf("RAW RESPONSE: %#v\n", resp)
-	//fmt.Printf("PAYLOAD TYPE: %T\n", resp.Payload)
-
-	// I KNOW YOU HELLO, SO HELLO YOU
+	// not HELLO
 	if resp.Type != "HELLO_ACK" {
 		fmt.Println("Expected HELLO_ACK, but got", resp.Type)
 		return
 	}
+
+	if ok {
+		fmt.Println("Remote Version:", helloPayload["version"])
+		fmt.Println("Remote Protocol:", helloPayload["protocol"])
+	}
+
+	/////////////////////////////////////////// CALC FILE HASH   ///////////////////////////////////////////
 
 	// GONNA CALCULAT DA FILE HASH
 	println("Calculating file hash...")
@@ -67,6 +81,8 @@ func SendFile(address string, path string) {
 
 	fmt.Println("SHA256:", checksum)
 
+	///////////////////////////////////////////   REQUEST SEND FILE   ///////////////////////////////////////////
+
 	// I HAVE A FILE FOR YA, OK OR NO?
 	protocol.Send(conn, protocol.Message{
 		Type: "FILE_OFFER",
@@ -77,8 +93,16 @@ func SendFile(address string, path string) {
 		},
 	})
 
+	// FILE ACCEPT?
 	resp, err = protocol.Receive(conn)
+	if err != nil {
+		fmt.Println("Failed to receive FILE_ACCEPT:", err)
+		return
+	}
+
 	fmt.Println("Server:", resp.Type)
+
+	fileAcceptPayload, ok := resp.Payload.(map[string]any)
 
 	// WHERE R U??
 	if err != nil {
@@ -97,24 +121,26 @@ func SendFile(address string, path string) {
 	}
 
 	// WTF YOU SAY???
-	payload, ok := resp.Payload.(map[string]any)
 	if !ok {
 		fmt.Println("Invalid FILE_ACCEPT payload")
 		return
 	}
 
 	// K SO WER UR ADDRES?
-	uploadURL, ok := payload["http_url"].(string)
+	uploadURL, ok := fileAcceptPayload["http_url"].(string)
 	if !ok {
 		fmt.Println("Missing upload URL")
 		return
 	}
 	fmt.Println("Target Upload URL:", uploadURL)
 
+	///////////////////////////////////////////   SEND FILE   ///////////////////////////////////////////
+
 	// R U READY?
 	protocol.Send(conn, protocol.Message{
 		Type: "FILE_START",
 	})
+	
 
 	// MIKU MIKU BEAAAAAAAAAAAM!!!
 	err = network.UploadFile(path, uploadURL)

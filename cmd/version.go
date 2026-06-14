@@ -15,7 +15,7 @@ var versionCmd = &cobra.Command{
 	Use:   "version",
 	Short: "Show some info and version of sambal",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("Sambal", version.Version)
+		fmt.Println("Sambal", version.AppVersion)
 	},
 }
 

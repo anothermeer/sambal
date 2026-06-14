@@ -13,6 +13,7 @@ import (
 	"syscall"
 
 	"github.com/anothermeer/sambal/internal/core/protocol"
+	"github.com/anothermeer/sambal/internal/core/version"
 )
 
 var expectedFileSize int64
@@ -126,6 +127,10 @@ func handleConnection(conn net.Conn) {
 		case "HELLO":
 			protocol.Send(conn, protocol.Message{
 				Type: "HELLO_ACK",
+				Payload: map[string]any{
+					"version":  version.AppVersion,
+					"protocol": version.ProtocolVersion,
+				},
 			})
 
 		case "FILE_OFFER":

@@ -1,3 +1,7 @@
 package version
 
-const Version = "v0.1.0"
+const (
+	AppVersion         = "v0.1.0"
+	ProtocolVersion    = "1"
+	MinProtocolVersion = "1"
+)
