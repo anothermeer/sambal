@@ -19,3 +19,7 @@ type TextTrans struct {
 type CBTrans struct {
 	Text string `json:"text"`
 }
+
+type Config struct {
+	ID string `json:"id"`
+}

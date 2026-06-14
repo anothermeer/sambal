@@ -18,11 +18,11 @@ Sambal V0.1.1
 │   ├── [/] file size validation
 │   ├── [/] overwrite check
 │   └── [/] checksum verifications
-├── [ ] protocol version compatibility
+├── [/] protocol version compatibility
 │   ├── [/] minimum supported version
-│   └── [ ] incompatible version warning
+│   └── [/] incompatible version warning
 ├── [/] better --help
-├── [ ] auto device name/id
+├── [/] auto device name/id
 ├── [/] large file transfer/streaming
 ├── [ ] mDNS discovery (sambal list)
 └── [/] double click -> temporary GUI

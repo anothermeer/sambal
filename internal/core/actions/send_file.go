@@ -6,16 +6,18 @@ import (
 	"net"
 	"os"
 	"path/filepath"
+	"strconv"
 
+	"github.com/anothermeer/sambal/internal/core/device"
 	"github.com/anothermeer/sambal/internal/core/network"
 	"github.com/anothermeer/sambal/internal/core/protocol"
 	"github.com/anothermeer/sambal/internal/core/version"
 )
 
 func SendFile(address string, path string) {
-	///////////////////////////////////////////   CHECKS   ///////////////////////////////////////////
+	///////////////////////////////////////////   CHECK FILE EXIST AND CONNECT   ///////////////////////////////////////////
 	// detect if file exist
-	info , err := os.Stat(path)
+	info, err := os.Stat(path)
 	if err != nil {
 		fmt.Println("File not found:", path)
 		return
@@ -38,8 +40,8 @@ func SendFile(address string, path string) {
 			"version":  version.AppVersion,
 			"protocol": version.ProtocolVersion,
 			"device": map[string]any{
-				"id":   ,
-				"name": ,
+				"id":   device.GetID(),
+				"name": device.GetName(),
 			},
 		},
 	})
@@ -52,10 +54,6 @@ func SendFile(address string, path string) {
 	}
 
 	helloPayload, ok := resp.Payload.(map[string]any)
-	if err != nil {
-		fmt.Println("Failed to receive HELLO_ACK:", err)
-		return
-	}
 	fmt.Println("Server:", resp.Type)
 
 	// not HELLO
@@ -64,9 +62,26 @@ func SendFile(address string, path string) {
 		return
 	}
 
+	/////////////////////////////////////////// CHECK VERSION   ///////////////////////////////////////////
 	if ok {
 		fmt.Println("Remote Version:", helloPayload["version"])
 		fmt.Println("Remote Protocol:", helloPayload["protocol"])
+	}
+	remoteProtocol, _ := helloPayload["protocol"].(string)
+
+	if remoteProtocol != strconv.Itoa(version.ProtocolVersion) {
+		fmt.Println()
+		fmt.Println("WARNING: Protocol mismatch!")
+		fmt.Println("Local Protocol :", version.ProtocolVersion)
+		fmt.Println("Remote Protocol:", remoteProtocol)
+		fmt.Println()
+	}
+
+	if remoteProtocol < strconv.Itoa(version.MinProtocolVersion) {
+		fmt.Println("ERROR: Remote protocol too old.")
+		fmt.Println("Required:", version.MinProtocolVersion)
+		fmt.Println("Remote:", remoteProtocol)
+		return
 	}
 
 	/////////////////////////////////////////// CALC FILE HASH   ///////////////////////////////////////////
@@ -104,11 +119,6 @@ func SendFile(address string, path string) {
 
 	fileAcceptPayload, ok := resp.Payload.(map[string]any)
 
-	// WHERE R U??
-	if err != nil {
-		fmt.Println("Failed to receive FILE_ACCEPT:", err)
-		return
-	}
 	// WHA- YOU SAY NO??? 💔
 	if resp.Type == "FILE_DECLINE" {
 		fmt.Println("Target device declined file transfer.")
@@ -140,7 +150,6 @@ func SendFile(address string, path string) {
 	protocol.Send(conn, protocol.Message{
 		Type: "FILE_START",
 	})
-	
 
 	// MIKU MIKU BEAAAAAAAAAAAM!!!
 	err = network.UploadFile(path, uploadURL)

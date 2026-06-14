@@ -6,6 +6,7 @@ import (
 	"io"
 	"net"
 	"net/http"
+	"strconv"
 
 	"context"
 	"os"
@@ -129,7 +130,7 @@ func handleConnection(conn net.Conn) {
 				Type: "HELLO_ACK",
 				Payload: map[string]any{
 					"version":  version.AppVersion,
-					"protocol": version.ProtocolVersion,
+					"protocol": strconv.Itoa(version.ProtocolVersion),
 				},
 			})
 
