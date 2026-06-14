@@ -161,7 +161,6 @@ jobs:
         with:
           tag_name: ${{ github.event.release.tag_name }}
           files: |
-#            **/*.zip
             **/sambal-linux-*
             **/sambal-windows-*.exe
           fail_on_unmatched_files: true

@@ -24,22 +24,25 @@ Sambal V0.1.1
 ├── [/] better --help
 ├── [/] auto device name/id
 ├── [/] large file transfer/streaming
-├── [ ] mDNS discovery (sambal list)
 └── [/] double click -> temporary GUI
 
-Planned features
-├── [ ] main window + settings
-├── [ ] Clipboard sync
+Sambal V0.2
 ├── [ ] transfer logs
-├── [ ] daemon/tray (sambal recv)
-├── [ ] better "sambal version"
-├── [ ] auto update
+├── [ ] mDNS discovery (sambal list)
 ├── [ ] better connection handling
 │   ├── [ ] pause transfer
 │   ├── [ ] resume transfer
 │   └── [ ] timeouts
 ├── [ ] multi-file support
 │   └── [ ] transfer IDs
+└── [ ] daemon/tray (sambal recv)
+
+Planned features
+├── [ ] main window
+├── [ ] Clipboard sync
+├── [ ] transfer logs
+├── [ ] better "sambal version"
+├── [ ] auto update
 └── [ ] settings flags
     ├── [ ] configurable port
     │   ├── [ ] port conflict warning
