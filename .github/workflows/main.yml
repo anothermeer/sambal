@@ -89,68 +89,68 @@ jobs:
           name: sambal-linux-arm64
           path: sambal-linux-arm64
 
-  build-macos-arm:
-    runs-on: macos-latest
+  # build-macos-arm:
+  #   runs-on: macos-latest
 
-    steps:
-      - uses: actions/checkout@v4
+  #   steps:
+  #     - uses: actions/checkout@v4
 
-      - uses: actions/setup-go@v5
-        with:
-          go-version: '1.26'
+  #     - uses: actions/setup-go@v5
+  #       with:
+  #         go-version: '1.26'
 
-      - name: Install Fyne
-        run: go install fyne.io/tools/cmd/fyne@latest
+  #     - name: Install Fyne
+  #       run: go install fyne.io/tools/cmd/fyne@latest
 
-      - name: Add Go bin to PATH
-        run: echo "$HOME/go/bin" >> $GITHUB_PATH
+  #     - name: Add Go bin to PATH
+  #       run: echo "$HOME/go/bin" >> $GITHUB_PATH
 
-      - name: Package macOS app
-        #run: fyne package -os darwin -arch arm64
-        run: GOOS=darwin GOARCH=arm64 fyne package
+  #     - name: Package macOS app
+  #       #run: fyne package -os darwin -arch arm64
+  #       run: GOOS=darwin GOARCH=arm64 fyne package
 
-      - name: Rename output app
-        run: |
-          mv *.app sambal-macos-arm64.app
-          zip -r sambal-macos-arm64.zip sambal-macos-arm64.app 
+  #     - name: Rename output app
+  #       run: |
+  #         mv *.app sambal-macos-arm64.app
+  #         zip -r sambal-macos-arm64.zip sambal-macos-arm64.app 
 
-      - uses: actions/upload-artifact@v4
-        with:
-          name: macos-arm64
-          path: sambal-macos-arm64.zip
+  #     - uses: actions/upload-artifact@v4
+  #       with:
+  #         name: macos-arm64
+  #         path: sambal-macos-arm64.zip
 
-  build-macos-amd:
-    runs-on: macos-26-intel
+  # build-macos-amd:
+  #   runs-on: macos-26-intel
 
-    steps:
-      - uses: actions/checkout@v4
+  #   steps:
+  #     - uses: actions/checkout@v4
 
-      - uses: actions/setup-go@v5
-        with:
-          go-version: '1.26'
+  #     - uses: actions/setup-go@v5
+  #       with:
+  #         go-version: '1.26'
 
-      - name: Install Fyne
-        run: go install fyne.io/tools/cmd/fyne@latest
+  #     - name: Install Fyne
+  #       run: go install fyne.io/tools/cmd/fyne@latest
 
-      - name: Add Go bin to PATH
-        run: echo "$HOME/go/bin" >> $GITHUB_PATH
+  #     - name: Add Go bin to PATH
+  #       run: echo "$HOME/go/bin" >> $GITHUB_PATH
 
-      - name: Package macOS app
-        #run: fyne package -os darwin -arch amd64
-        run: GOOS=darwin GOARCH=amd64 fyne package
+  #     - name: Package macOS app
+  #       #run: fyne package -os darwin -arch amd64
+  #       run: GOOS=darwin GOARCH=amd64 fyne package
 
-      - name: Rename output app
-        run: |
-          mv *.app sambal-macos-amd64.app
-          zip -r sambal-macos-amd64.zip sambal-macos-amd64.app 
+  #     - name: Rename output app
+  #       run: |
+  #         mv *.app sambal-macos-amd64.app
+  #         zip -r sambal-macos-amd64.zip sambal-macos-amd64.app 
 
-      - uses: actions/upload-artifact@v4
-        with:
-          name: macos-amd64
-          path: sambal-macos-amd64.zip
+  #     - uses: actions/upload-artifact@v4
+  #       with:
+  #         name: macos-amd64
+  #         path: sambal-macos-amd64.zip
           
   upload:
-    needs: [build-windows, build-linux-amd, build-linux-arm, build-macos-amd, build-macos-arm]
+    needs: [build-windows, build-linux-amd, build-linux-arm]#, build-macos-amd, build-macos-arm
     runs-on: ubuntu-latest
 
     steps:
@@ -161,7 +161,7 @@ jobs:
         with:
           tag_name: ${{ github.event.release.tag_name }}
           files: |
-            **/*.zip
+#            **/*.zip
             **/sambal-linux-*
             **/sambal-windows-*.exe
           fail_on_unmatched_files: true
