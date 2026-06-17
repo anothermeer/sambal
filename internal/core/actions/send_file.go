@@ -56,6 +56,11 @@ func SendFile(address string, path string) {
 	helloPayload, ok := resp.Payload.(map[string]any)
 	fmt.Println("Server:", resp.Type)
 
+	if !ok {
+		fmt.Println("Invalid HELLO_ACK payload.")
+		return
+	}
+
 	// not HELLO
 	if resp.Type != "HELLO_ACK" {
 		fmt.Println("Expected HELLO_ACK, but got", resp.Type)
@@ -68,8 +73,9 @@ func SendFile(address string, path string) {
 		fmt.Println("Remote Protocol:", helloPayload["protocol"])
 	}
 	remoteProtocol, _ := helloPayload["protocol"].(string)
+	remProtoInt, err := strconv.Atoi(remoteProtocol)
 
-	if remoteProtocol != strconv.Itoa(version.ProtocolVersion) {
+	if remProtoInt != version.ProtocolVersion {
 		fmt.Println()
 		fmt.Println("WARNING: Protocol mismatch!")
 		fmt.Println("Local Protocol :", version.ProtocolVersion)
@@ -77,7 +83,7 @@ func SendFile(address string, path string) {
 		fmt.Println()
 	}
 
-	if remoteProtocol < strconv.Itoa(version.MinProtocolVersion) {
+	if remProtoInt < version.MinProtocolVersion {
 		fmt.Println("ERROR: Remote protocol too old.")
 		fmt.Println("Required:", version.MinProtocolVersion)
 		fmt.Println("Remote:", remoteProtocol)
@@ -87,7 +93,7 @@ func SendFile(address string, path string) {
 	/////////////////////////////////////////// CALC FILE HASH   ///////////////////////////////////////////
 
 	// GONNA CALCULAT DA FILE HASH
-	println("Calculating file hash...")
+	fmt.Println("Calculating file hash...")
 	checksum, err := network.SHA256(path)
 	if err != nil {
 		fmt.Println("Hash failed:", err)

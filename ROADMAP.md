@@ -28,7 +28,9 @@ Sambal V0.1.1
 
 Sambal V0.2
 ├── [ ] transfer logs
-├── [ ] mDNS discovery (sambal list)
+├── [ ] mDNS discovery
+│   ├── [ ] sambal recv advertiser
+│   └── [ ] sambal list discovery
 ├── [ ] better connection handling
 │   ├── [ ] pause transfer
 │   ├── [ ] resume transfer

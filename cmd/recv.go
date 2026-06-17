@@ -6,6 +6,7 @@ package cmd
 import (
 	"fmt"
 
+	"github.com/anothermeer/sambal/internal/core/discovery"
 	"github.com/anothermeer/sambal/internal/core/network"
 	"github.com/spf13/cobra"
 )
@@ -17,6 +18,12 @@ var recvCmd = &cobra.Command{
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("Entered receiving mode...")
+		err := discovery.StartAdvertiser()
+		if err != nil {
+			fmt.Println("ERROR: mDNS error ->", err)
+		} else {
+			fmt.Println("mDNS discovery started")
+		}
 		network.StartTCPSrv("3721")
 	},
 }
