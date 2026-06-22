@@ -28,6 +28,7 @@ Sambal V0.1.1
 
 Sambal V0.2
 ├── [ ] transfer logs
+├── [ ] self tests
 ├── [ ] mDNS discovery
 │   ├── [ ] sambal recv advertiser
 │   └── [ ] sambal list discovery
