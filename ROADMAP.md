@@ -1,5 +1,5 @@
 ```
-Sambal V0.1
+Sambal V0.1 [released]
 ├── [/] CLI (cobra)
 ├── [/] GUI (fyne, temporary)
 ├── [/] server/receive
@@ -12,7 +12,7 @@ Sambal V0.1
 ├── [/] tidy commands and functions
 └── [/] JSON message system
 
-Sambal V0.1.1
+Sambal V0.1.1 [released]
 ├── [/] real HTTP file transfer
 │   ├── [/] progress bar
 │   ├── [/] file size validation
@@ -46,6 +46,7 @@ Planned features
 ├── [ ] transfer logs
 ├── [ ] better "sambal version"
 ├── [ ] auto update
+├── [ ] end-to-end encryption pipeline
 └── [ ] settings flags
     ├── [ ] configurable port
     │   ├── [ ] port conflict warning
@@ -62,6 +63,16 @@ Future plans
 ├── [ ] Windows & MacOS signing
 ├── [ ] More Linux distro compatibility
 └── [ ] Better GUI
+
+OS to support:
+- Windows x86_64 (from vista)
+- windows ARM/x32 (vista-7)
+- Linux x86_64 (kernel>3.1)
+- Linux ARM (especially SBC OSes)
+- MacOS/iOS/iPadOS
+- Blackberry OS
+- TempleOS (personal challenge)
+[do tell me what other OS I should support ;) ]
 
 planned commands:
 sambal version
