@@ -22,7 +22,7 @@ go.work.sum
 .vscode/
 
 # images (temporary)
-#imgs/
+# imgs/
 #*.png
 # not anymore!
 

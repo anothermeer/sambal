@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/grandcat/zeroconf"
+	"github.com/libp2p/zeroconf/v2"
 
 	"github.com/anothermeer/sambal/internal/core/device"
 	"github.com/anothermeer/sambal/internal/core/version"
@@ -15,37 +15,39 @@ var server *zeroconf.Server
 func StartAdvertiser() error {
 	var err error
 
-	server, err = zeroconf.Register(
-		device.GetName(),
-		"_sambal._tcp",
-		"local.",
-		3721,
-		[]string{
-			"id=" + device.GetID(),
-			"protocol=" + strconv.Itoa(version.ProtocolVersion),
-			"version=" + version.AppVersion,
-		},
-		nil,
-	)
-
-	zeroconf.Register("SambalTest", "_http._tcp", "local.", 3721, nil, nil)
-
-	fmt.Printf(
-		"[DBG] mDNS advertising: %s._sambal._tcp.local\n",
-		device.GetName(),
-	)
-	if err != nil {
-		fmt.Println("mDNS Register Error:", err)
-		return err
+	txt := []string{
+		"id=" + device.GetID(),
+		"name=" + device.GetName(),
+		"version=" + version.AppVersion,
+		"protocol=" + strconv.Itoa(version.ProtocolVersion),
+		"port=" + strconv.Itoa(DefaultPort),
 	}
 
-	fmt.Println("mDNS advertising:", device.GetName())
+	server, err = zeroconf.Register(
+		device.GetName(),
+		Service,
+		Domain,
+		DefaultPort,
+		txt,
+		nil,
+	)
+	if err != nil {
+		return fmt.Errorf("register mdns service: %w", err)
+	}
 
-	return err
+	fmt.Printf(
+		"[DBG] mDNS advertising: %s.%s.%s\n",
+		device.GetName(),
+		Service,
+		Domain,
+	)
+
+	return nil
 }
 
 func StopAdvertiser() {
 	if server != nil {
 		server.Shutdown()
+		server = nil
 	}
 }

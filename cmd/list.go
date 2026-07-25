@@ -4,6 +4,9 @@ Copyright © 2026 anothermeer <me@melons.cc>
 package cmd
 
 import (
+	"fmt"
+	"time"
+
 	"github.com/anothermeer/sambal/internal/core/discovery"
 
 	"github.com/spf13/cobra"
@@ -16,7 +19,26 @@ var listCmd = &cobra.Command{
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
 		// fmt.Println("Scanning devices...")
-		discovery.ListDevices()
+		devices, err := discovery.Browse(5 * time.Second)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+
+		if len(devices) == 0 {
+			fmt.Println("No Sambal devices found.")
+			return
+		}
+
+		for _, d := range devices {
+			fmt.Printf(
+				"%-18s %-15s %-8s %s\n",
+				d.Name,
+				d.Addr,
+				d.Version,
+				d.ID,
+			)
+		}
 	},
 }
 

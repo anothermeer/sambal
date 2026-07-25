@@ -29,3 +29,34 @@ func main() {
 	//finally always GUI
 	gui.Run()
 }
+
+// look closely...
+// Hello, world!  	  	   // fucking go beautifier deleting the thing..
+//	//
+//     		  	 	//
+//	//
+//     		 		  //
+//	//
+//     		 		  //
+//	//
+//     		 				//
+//	//
+//     	 		  //
+//	//
+//     	     //
+//	//
+//     			 			//
+//	//
+//     		 				//
+//	//
+//     			  	 //
+//	//
+//     		 		  //
+//	//
+//     		  	  //
+//	//
+//  //
+////
+////
+////
+// the end
