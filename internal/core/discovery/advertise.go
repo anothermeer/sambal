@@ -27,6 +27,10 @@ func StartAdvertiser() error {
 		},
 		nil,
 	)
+	fmt.Printf(
+		"[DBG] mDNS advertising: %s._sambal._tcp.local\n",
+		device.GetName(),
+	)
 	if err != nil {
 		fmt.Println("mDNS Register Error:", err)
 		return err

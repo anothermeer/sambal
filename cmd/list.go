@@ -4,7 +4,7 @@ Copyright © 2026 anothermeer <me@melons.cc>
 package cmd
 
 import (
-	"fmt"
+	"github.com/anothermeer/sambal/internal/core/discovery"
 
 	"github.com/spf13/cobra"
 )
@@ -15,7 +15,8 @@ var listCmd = &cobra.Command{
 	Short: "List nearby devices.",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("Scanning devices...")
+		// fmt.Println("Scanning devices...")
+		discovery.ListDevices()
 	},
 }
 
