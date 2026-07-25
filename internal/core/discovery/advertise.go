@@ -35,12 +35,12 @@ func StartAdvertiser() error {
 		return fmt.Errorf("register mdns service: %w", err)
 	}
 
-	fmt.Printf(
-		"[DBG] mDNS advertising: %s.%s.%s\n",
-		device.GetName(),
-		Service,
-		Domain,
-	)
+	// fmt.Printf(
+	// 	"[DBG] mDNS advertising: %s.%s.%s\n",
+	// 	device.GetName(),
+	// 	Service,
+	// 	Domain,
+	// )
 
 	return nil
 }

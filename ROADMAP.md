@@ -29,15 +29,17 @@ Sambal V0.1.1 [released]
 Sambal V0.2
 ├── [ ] transfer logs
 ├── [ ] self tests
-├── [ ] mDNS discovery
-│   ├── [ ] sambal recv advertiser
-│   └── [ ] sambal list discovery
+├── [/] mDNS discovery
+│   ├── [/] sambal recv advertiser
+│   └── [/] sambal list discovery
 ├── [ ] better connection handling
 │   ├── [ ] pause transfer
 │   ├── [ ] resume transfer
+│   ├── [ ] cancel transfer
 │   └── [ ] timeouts
 ├── [ ] multi-file support
 │   └── [ ] transfer IDs
+├── [ ] transfer cache (sambal list)
 └── [ ] daemon/tray (sambal recv)
 
 Planned features
@@ -62,6 +64,13 @@ Future plans
 ├── [ ] iOS support
 ├── [ ] Windows & MacOS signing
 ├── [ ] More Linux distro compatibility
+├── [ ] integration tests
+├── [ ] benchmark transfers
+├── [ ] packet/protocol documentation (Scary :O)
+├── [ ] architecture diagram
+├── [ ] security audit
+├── [ ] fuzz testing protocol parser
+├── [ ] malicious client/server handling
 └── [ ] Better GUI
 
 OS to support:
@@ -72,12 +81,22 @@ OS to support:
 - MacOS/iOS/iPadOS
 - Blackberry OS
 - TempleOS (personal challenge)
+- Haiku
+- ReactOS (experiment)
+- *BSD
+- Solaris
+- ChromeOS
+- GNU Hurd
+- Minix 3
+- Kolibri OS
+- SerenityOS
+- Plan 9
 [do tell me what other OS I should support ;) ]
 
 planned commands:
 sambal version
 sambal send <file>
-sambal recv
+sambal recv / receive
 sambal text <text>
 sambal ping
 sambal clip
