@@ -36,3 +36,19 @@ Install OpenGL/X11 development libraries:
 ```bash
 sudo apt install gcc libgl1-mesa-dev xorg-dev
 ```
+
+### Windows build error:
+`build constraints exclude all Go files`
+
+1. Run:
+```bash
+go env -w CGO_ENABLED=1
+```
+2. Ensure C compiler is installed
+
+check:
+```bash
+gcc --version
+clang --version
+```
+fix: install compiler toolchain (eg: mingw64 GCC)

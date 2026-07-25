@@ -27,6 +27,9 @@ func StartAdvertiser() error {
 		},
 		nil,
 	)
+
+	zeroconf.Register("SambalTest", "_http._tcp", "local.", 3721, nil, nil)
+
 	fmt.Printf(
 		"[DBG] mDNS advertising: %s._sambal._tcp.local\n",
 		device.GetName(),
