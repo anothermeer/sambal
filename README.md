@@ -10,13 +10,14 @@ Fun Fact: the name `Sambal` is actually inspired from the file transfer tool, sa
 - internet connection
 - you
 
-## Installation (I actually don't know how)
+## Installation
 Windows:
 ```powershell
 git clone https://github.com/anothermeer/sambal
 cd sambal
 go build . -o sambal.exe
 ```
+> if you want GUI: go build . -tag gui -o sambal.exe
 Linux/Unix:
 ```bash
 sudo apt update
@@ -25,6 +26,7 @@ git clone https://github.com/anothermeer/sambal
 cd sambal
 go build . -o sambal
 ```
+> if you want GUI: go build . -tag gui -o sambal
 
 ## Troubleshooting
 

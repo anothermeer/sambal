@@ -26,8 +26,14 @@ func main() {
 		return
 	}
 
-	//finally always GUI
-	gui.Run()
+	// go go GUI
+	if gui.Available() {
+		gui.Run()
+		return
+	}
+
+	// the final fallback..
+	cmd.Execute()
 }
 
 // look closely...
