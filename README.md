@@ -18,6 +18,7 @@ cd sambal
 go build . -o sambal.exe
 ```
 > if you want GUI: go build . -tag gui -o sambal.exe
+
 Linux/Unix:
 ```bash
 sudo apt update
