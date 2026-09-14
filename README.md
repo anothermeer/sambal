@@ -10,7 +10,7 @@
 -> No subscriptions
 
 
-> [!info]
+> [!NOTE]
 > Fun Fact: the name `Sambal` is actually inspired from the file transfer tool, samba, and Malaysia's iconic local cuisine, nasi lemak, which has a chili paste called sambal.
 
 
