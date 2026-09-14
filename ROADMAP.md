@@ -39,16 +39,23 @@ Sambal V0.2
 │   └── [ ] timeouts
 ├── [ ] multi-file support
 │   └── [ ] transfer IDs
+├── [ ] compatibility
+│   ├── [ ] legacy support
+│   ├── [ ] protocol downgrade
+│   ├── [ ] feat nego
+│   └── [ ] depricated commands
 ├── [ ] transfer cache (sambal list)
 └── [ ] daemon/tray (sambal recv)
 
 Planned features
 ├── [ ] main window
 ├── [ ] Clipboard sync
-├── [ ] transfer logs
+├── [ ] self test (sambal doctor/dr)
+    └── [ ] firewall test
 ├── [ ] better "sambal version"
 ├── [ ] auto update
-├── [ ] end-to-end encryption pipeline
+├── [ ] notification (request & info)
+├── [ ] sendable folder
 └── [ ] settings flags
     ├── [ ] configurable port
     │   ├── [ ] port conflict warning
@@ -65,13 +72,31 @@ Future plans
 ├── [ ] Windows & MacOS signing
 ├── [ ] More Linux distro compatibility
 ├── [ ] integration tests
-├── [ ] benchmark transfers
 ├── [ ] packet/protocol documentation (Scary :O)
 ├── [ ] architecture diagram
 ├── [ ] security audit
 ├── [ ] fuzz testing protocol parser
 ├── [ ] malicious client/server handling
-└── [ ] Better GUI
+├── [ ] end-to-end encryption pipeline
+├── [ ] Better GUI
+└── [ ] QOL Updates
+    ├── [ ] Discovery: remembered devices
+    │   └── [ ] Discovery: device trust
+    ├── [ ] Discovery: device alias
+    ├── [ ] Transfer: transfer queue
+    ├── [ ] Transfer: resume metadata
+    ├── [ ] Transfer: compression (optional)
+    ├── [ ] mDNS: discovery monitor (sambal dismon)
+    ├── [ ] mDNS: fallback discovery (manual IP broadcast)
+    ├── [ ] GUI: drag & drop
+    ├── [ ] GUI: animation (something like mac apps)
+    ├── [ ] Daemon: receive only flag
+    ├── [ ] Misc: bandwidth limiter
+    ├── [ ] Misc: device capability
+    ├── [ ] Misc: benchmark (sambal bench)
+    ├── [ ] Misc: config file (or registry if on windows)
+    ├── [ ] Misc: installable/portable mode
+    └── [ ] Misc: QR pairing (for phones and devices with camera)
 
 OS to support:
 - Windows x86_64 (from vista)
@@ -112,6 +137,6 @@ planned flags:
 --ip <ip addr>
 --fileloc <path>
 
-(maybe open a Github Sponsors??)
+(maybe open a Github Sponsors?? not yet)
 ...still planning...
 ```
