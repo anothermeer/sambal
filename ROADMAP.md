@@ -28,7 +28,7 @@ Sambal V0.1.1 [released]
 
 Sambal V0.2
 ├── [ ] transfer logs
-├── [ ] self tests
+├── [ ] dedvelopment tests (go test ./...)
 ├── [/] mDNS discovery
 │   ├── [/] sambal recv advertiser
 │   └── [/] sambal list discovery
@@ -51,7 +51,7 @@ Planned features
 ├── [ ] main window
 ├── [ ] Clipboard sync
 ├── [ ] self test (sambal doctor/dr)
-    └── [ ] firewall test
+│   └── [ ] firewall test
 ├── [ ] better "sambal version"
 ├── [ ] auto update
 ├── [ ] notification (request & info)
