@@ -6,13 +6,15 @@ UNITS = {
     "KB": 1024,
     "MB": 1024 ** 2,
     "GB": 1024 ** 3,
+    "TB": 1024 ** 4,
+    "PB": 1024 ** 5,
 }
 
 
 def parse_size(size_str):
     size_str = size_str.strip().upper()
 
-    for unit in ["GB", "MB", "KB", "B"]:
+    for unit in ["B", "KB", "MB", "GB", "TB", "PB"]:
         if size_str.endswith(unit):
             number = float(size_str[:-len(unit)])
             return int(number * UNITS[unit])
