@@ -1,10 +1,9 @@
 package connection
 
 import (
+	"context"
 	"errors"
 	"time"
-
-	"golang.org/x/net/context"
 )
 
 type Manager struct {
@@ -39,31 +38,52 @@ func (m *Manager) NewTransfer(id string) *Transfer {
 }
 
 func (t *Transfer) Cancel() {
+	t.cancel()
 	t.State = StateCancelled
-	t.Cancel()
 }
 
 func (m *Manager) Run(t *Transfer, fn func(context.Context) error) error {
 	var err error
 
 	for i := 0; i <= m.Retry; i++ {
-		err = fn(t.ctx)
+		if t.ctx.Err() != nil {
+			t.State = StateCancelled
+			return t.ctx.Err()
+		}
+
+		attemptCtx, cancel := context.WithTimeout(t.ctx, m.Timeout)
+		err = fn(attemptCtx)
+		cancel()
 
 		if err == nil {
 			t.State = StateCompleted
+			t.cancel()
 			return nil
 		}
 
 		if errors.Is(err, context.Canceled) {
 			t.State = StateCancelled
+			t.cancel()
 			return err
 		}
 
 		if errors.Is(err, context.DeadlineExceeded) {
 			t.State = StateTimedOut
+
+			if i < m.Retry {
+				continue
+			}
+			t.cancel()
+			return err
+		}
+
+		if i < m.Retry {
+			continue
 		}
 
 		t.State = StateFailed
+		t.cancel()
+		return err
 	}
 
 	return err

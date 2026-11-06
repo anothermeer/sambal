@@ -33,6 +33,10 @@ Sambal V0.2
 │   ├── [/] sambal recv advertiser
 │   └── [/] sambal list discovery
 ├── [ ] better connection handling
+│   ├── [ ] transfer in chunks (1 MiB)
+│   │   ├── [ ] http endpoint /upload/start
+│   │   ├── [ ] http endpoint /upload/chunk
+│   │   └── [ ] http endpoint /upload/complete
 │   ├── [ ] pause transfer
 │   ├── [ ] resume transfer
 │   ├── [ ] cancel transfer

@@ -1,13 +1,14 @@
 package network
 
 import (
+	"context"
 	"fmt"
 	"io"
 	"net/http"
 	"os"
 )
 
-func UploadFile(path string, url string) error {
+func UploadFile(ctx context.Context, path string, url string) error {
 
 	file, err := os.Open(path)
 	if err != nil {
@@ -28,7 +29,7 @@ func UploadFile(path string, url string) error {
 	// duplicate stream into progress tracker
 	reader := io.TeeReader(file, progress)
 
-	req, err := http.NewRequest("POST", url, reader)
+	req, err := http.NewRequestWithContext(ctx, "POST", url, reader)
 
 	if err != nil {
 		return err
@@ -42,6 +43,10 @@ func UploadFile(path string, url string) error {
 		return err
 	}
 	defer resp.Body.Close()
+
+	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
+		return fmt.Errorf("Upload failed: HTTP %s", resp.Status)
+	}
 
 	fmt.Println("\nUpload completed.")
 

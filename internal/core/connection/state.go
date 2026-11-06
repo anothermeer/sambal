@@ -12,4 +12,5 @@ const (
 	StateCancelled
 	StateTimedOut
 	StateFailed
+	StatePaused
 )
